@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { initialState } from "./reducers";
+import { initialState } from "./reducer";
 
 /**
  * Direct selector to the homePage state domain

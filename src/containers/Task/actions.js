@@ -14,6 +14,9 @@ import {
   GET_TASK,
   GET_TASK_SUCCESS,
   GET_TASK_FAILED,
+  DELETE_TASK,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILED,
 } from "./constants";
 
 export function defaultAction() {
@@ -23,7 +26,6 @@ export function defaultAction() {
 }
 
 export function createTask(data) {
-  console.log("ACTION", data);
   return {
     type: CREATE_TASK,
     data,
@@ -44,10 +46,11 @@ export function createTaskFailed(response) {
   };
 }
 
-export function updateTask(data) {
+export function updateTask(data, id) {
   return {
     type: UPDATE_TASK,
     data,
+    id,
   };
 }
 
@@ -82,6 +85,27 @@ export function getTaskSuccess(response) {
 export function getTaskFailed(response) {
   return {
     type: GET_TASK_FAILED,
+    response,
+  };
+}
+
+export function deleteTask(data) {
+  return {
+    type: DELETE_TASK,
+    data,
+  };
+}
+
+export function deleteTaskSuccess(response) {
+  return {
+    type: DELETE_TASK_SUCCESS,
+    response,
+  };
+}
+
+export function deleteTaskFailed(response) {
+  return {
+    type: DELETE_TASK_FAILED,
     response,
   };
 }

@@ -4,5 +4,5 @@ import taskSaga from "./containers/Task/saga";
 
 // Redux Saga: Root Saga
 export default function* rootSaga() {
-  yield all(fork(taskSaga));
+  yield all([fork(taskSaga)]);
 }

@@ -13,10 +13,14 @@ import {
   GET_TASK,
   GET_TASK_SUCCESS,
   GET_TASK_FAILED,
+  DELETE_TASK,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILED,
 } from "./constants";
 
 export const initialState = {
   taskData: null,
+  allTasks: null,
   creatingTaskSuccess: false,
   creatingTaskFailed: false,
   creatingTaskErrorMessage: "",
@@ -26,11 +30,13 @@ export const initialState = {
   gettingTaskSuccess: false,
   gettingTaskFailed: false,
   gettingTaskErrorMessage: "",
+  deletingTaskSuccess: false,
+  deletingTaskFailed: false,
+  deletingTaskErrorMessage: "",
 };
 
 const taskReducer = (state = initialState, action) =>
   produce(state, (draft) => {
-    console.log("REDUCER", action.type);
     switch (action.type) {
       case DEFAULT_ACTION:
         break;
@@ -41,8 +47,7 @@ const taskReducer = (state = initialState, action) =>
         draft.creatingTaskErrorMessage = "";
         break;
       case CREATE_TASK_SUCCESS:
-        // console.log("REDUCER", action);
-        draft.taskData = action;
+        draft.taskData = action.response;
         draft.creatingTaskSuccess = true;
         draft.creatingTaskFailed = false;
         draft.creatingTaskErrorMessage = "";
@@ -72,22 +77,36 @@ const taskReducer = (state = initialState, action) =>
         draft.updatingTaskErrorMessage = action.response.error;
         break;
       case GET_TASK:
-        draft.taskData = [];
         draft.gettingTaskSuccess = false;
         draft.gettingTaskFailed = false;
         draft.gettingTaskErrorMessage = "";
         break;
       case GET_TASK_SUCCESS:
-        draft.taskData = action.response.data;
+        draft.allTasks = action.response;
         draft.gettingTaskSuccess = true;
         draft.gettingTaskFailed = false;
         draft.gettingTaskErrorMessage = "";
         break;
       case GET_TASK_FAILED:
-        draft.taskData = [];
         draft.gettingTaskSuccess = false;
         draft.gettingTaskFailed = true;
         draft.gettingTaskErrorMessage = action.response.error;
+        break;
+      case DELETE_TASK:
+        draft.deletingTaskSuccess = false;
+        draft.deletingTaskFailed = false;
+        draft.deletingTaskErrorMessage = "";
+        break;
+      case DELETE_TASK_SUCCESS:
+        draft.taskData = action.response;
+        draft.deletingTaskSuccess = true;
+        draft.deletingTaskFailed = false;
+        draft.deletingTaskErrorMessage = "";
+        break;
+      case DELETE_TASK_FAILED:
+        draft.deletingTaskSuccess = false;
+        draft.deletingTaskFailed = true;
+        draft.deletingTaskErrorMessage = action.response.error;
         break;
     }
   });
